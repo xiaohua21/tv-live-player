@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>CORS Test</title></head>
+<body>
+  <h3>浏览器环境拉流测试</h3>
+  <div id="result">测试中…</div>
+  <pre id="log"></pre>
+  <script>
+    const logEl = document.getElementById('log');
+    const log = (s) => { logEl.textContent += s + '\n'; };
+
+    // 用与 hls.js 相同的方式(XHR) 请求 CCTV1 的 m3u8
+    const targets = [
+      'http://74.91.26.218:82/live/cctv1hd.m3u8',
+      'http://125.125.236.31:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0',
+    ];
+
+    async function test(url) {
+      try {
+        const r = await fetch(url);
+        const t = await r.text();
+        log('✅ ' + url.slice(0, 50) + ' => HTTP ' + r.status + ' 长度 ' + t.length);
+      } catch (e) {
+        log('❌ ' + url.slice(0, 50) + ' => ' + e.message);
+      }
+    }
+
+    (async () => {
+      log('Origin = ' + location.origin + ' (file:// 下显示 null)');
+      for (const u of targets) await test(u);
+      log('测试结束');
+    })();
+  </script>
+</body>
+</html>

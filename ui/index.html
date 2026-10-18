@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电视直播</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 顶栏 -->
+    <header id="topbar">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <span class="brand-name">电视直播</span>
+        <span class="brand-sub">v1.0 · iptv 源</span>
+      </div>
+      <div class="top-actions">
+        <button id="btn-check" class="btn" title="重新检测全部源可用性">检查源</button>
+        <button id="btn-update" class="btn" title="从 GitHub 拉取最新直播源">更新源</button>
+        <button id="btn-filter" class="btn" title="只显示有可用源的频道">只看可用</button>
+        <span id="status-text" class="status-text">加载中…</span>
+      </div>
+    </header>
+
+    <div id="main">
+      <!-- 左：分类树 -->
+      <aside id="sidebar">
+        <div class="panel-title">频道分类</div>
+        <ul id="cat-list"></ul>
+      </aside>
+
+      <!-- 中：播放器 -->
+      <section id="player-col">
+        <div id="video-wrap">
+          <video id="video" autoplay controls playsinline></video>
+          <div id="video-mask" class="hidden">
+            <div id="mask-title">选择左侧频道开始播放</div>
+            <div id="mask-sub"></div>
+          </div>
+        </div>
+        <div id="player-bar">
+          <button id="btn-prev" class="bar-btn" title="上一个频道 (↑)">⏮ 上</button>
+          <span id="now-playing" class="now-playing">未播放</span>
+          <button id="btn-next" class="bar-btn" title="下一个频道 (↓)">下 ⏭</button>
+          <div class="spacer"></div>
+          <span id="source-info" class="source-info"></span>
+          <button id="btn-switch" class="bar-btn" title="切换到下一条可用源 (S)">🔀 换源</button>
+        </div>
+      </section>
+
+      <!-- 右：频道列表 -->
+      <aside id="channel-col">
+        <div class="panel-title">
+          频道列表 <span id="channel-count" class="count"></span>
+        </div>
+        <input id="search" type="text" placeholder="🔍 搜索频道…" autocomplete="off">
+        <div class="legend">
+          <span class="dot ok"></span>可用
+          <span class="dot slow"></span>慢
+          <span class="dot bad"></span>失效
+        </div>
+        <ul id="channel-list"></ul>
+      </aside>
+    </div>
+
+    <footer id="footer">
+      <span id="footer-info">数据源: vbskycn/iptv · 双击频道播放</span>
+    </footer>
+  </div>
+
+  <script src="vendor/hls.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

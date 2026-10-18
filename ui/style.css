@@ -1,0 +1,219 @@
+/* ===== 深色电视风 ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg: #0f1318;
+  --panel: #141a21;
+  --panel-2: #1b2430;
+  --border: #232a33;
+  --text: #e8ecef;
+  --text-dim: #8b95a1;
+  --accent: #378add;
+  --ok: #4caf7d;
+  --slow: #e6b23c;
+  --bad: #e0554f;
+  --hover: #253140;
+}
+
+html, body { height:100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+  user-select: none;
+}
+
+#app { display:flex; flex-direction:column; height:100vh; }
+
+/* ===== 顶栏 ===== */
+#topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 14px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  flex:none;
+}
+.brand { display:flex; align-items:center; gap:8px; }
+.logo-dot {
+  width:10px; height:10px; border-radius:50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(55,138,221,.7);
+}
+.brand-name { font-size:15px; font-weight:500; letter-spacing:1px; }
+.brand-sub { font-size:11px; color:var(--text-dim); }
+.top-actions { display:flex; align-items:center; gap:8px; }
+
+.btn {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn:hover { background: var(--hover); }
+.btn:disabled { opacity:.4; cursor:not-allowed; }
+.btn.active { border-color: var(--accent); color: var(--accent); }
+
+.status-text { font-size:11px; color:var(--text-dim); min-width:120px; text-align:right; }
+
+/* ===== 主区域 ===== */
+#main { display:flex; flex:1; min-height:0; }
+
+/* 左分类树 */
+#sidebar {
+  width:170px; flex:none;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  overflow-y:auto;
+  padding-bottom: 12px;
+}
+.panel-title {
+  font-size:11px; color:var(--text-dim);
+  padding:10px 14px 6px; letter-spacing:1px;
+}
+#cat-list { list-style:none; }
+#cat-list li {
+  padding:6px 16px; cursor:pointer;
+  font-size:12.5px; color:var(--text-dim);
+  border-left:2px solid transparent;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition: background .15s, color .15s;
+}
+#cat-list li:hover { background:var(--hover); color:var(--text); }
+#cat-list li.active {
+  background: var(--panel-2);
+  border-left-color: var(--accent);
+  color: #fff;
+}
+#cat-list li .cat-count { float:right; font-size:10.5px; color:var(--text-dim); opacity:.6; }
+
+/* 中播放区 */
+#player-col {
+  flex:1; display:flex; flex-direction:column;
+  min-width:0;
+}
+#video-wrap {
+  flex:1; position:relative;
+  background:#000;
+  min-height:0;
+}
+#video {
+  width:100%; height:100%;
+  background:#000;
+  object-fit:contain;
+}
+#video-mask {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:10px;
+  background:#06080b;
+  color:var(--text-dim);
+}
+#video-mask.hidden { display:none; }
+#mask-title { font-size:16px; color:var(--text); font-weight:500; }
+#mask-sub { font-size:12px; }
+
+#player-bar {
+  display:flex; align-items:center; gap:10px;
+  padding:8px 12px;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  flex:none;
+}
+.bar-btn {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius:6px;
+  padding:5px 12px;
+  font-size:12px; cursor:pointer;
+  transition: all .15s;
+}
+.bar-btn:hover:not(:disabled) { border-color:var(--accent); color:var(--text); }
+.bar-btn:disabled { opacity:.35; cursor:not-allowed; }
+.now-playing { font-size:13px; font-weight:500; min-width:90px; }
+.source-info { font-size:11px; color:var(--text-dim); }
+.spacer { flex:1; }
+
+/* 右频道列表 */
+#channel-col {
+  width:230px; flex:none;
+  background: var(--panel);
+  border-left: 1px solid var(--border);
+  display:flex; flex-direction:column;
+}
+.count { color:var(--text-dim); font-weight:400; font-size:11px; }
+#search {
+  margin:0 12px 8px;
+  padding:6px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius:6px;
+  color: var(--text);
+  font-size:12.5px;
+  outline:none;
+}
+#search:focus { border-color: var(--accent); }
+#search::placeholder { color: var(--text-dim); }
+
+.legend {
+  display:flex; align-items:center; gap:6px;
+  padding:0 14px 8px;
+  font-size:11px; color:var(--text-dim);
+}
+.legend .dot + .dot { margin-left:10px; }
+.dot { width:7px; height:7px; border-radius:50%; display:inline-block; }
+.dot.ok   { background:var(--ok); }
+.dot.slow { background:var(--slow); }
+.dot.bad  { background:var(--bad); }
+
+#channel-list {
+  flex:1; overflow-y:auto;
+  list-style:none;
+  padding-bottom:12px;
+}
+#channel-list li {
+  display:flex; align-items:center; gap:8px;
+  padding:5px 14px;
+  font-size:12.5px;
+  cursor:pointer;
+  color: var(--text-dim);
+  transition: background .12s;
+}
+#channel-list li .ch-logo {
+  width:22px; height:22px; flex:none;
+  border-radius:4px;
+  overflow:hidden;
+  background: var(--panel-2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; color:var(--text-dim);
+}
+#channel-list li .ch-logo img { width:100%; height:100%; object-fit:cover; }
+#channel-list li .ch-name {
+  flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+#channel-list li .ch-status { flex:none; width:7px; height:7px; border-radius:50%; }
+#channel-list li:hover { background:var(--hover); color:var(--text); }
+#channel-list li.active { background:var(--panel-2); color:#fff; }
+#channel-list li.active .ch-name { color:#fff; }
+
+/* 页脚 */
+#footer {
+  padding:5px 14px;
+  background: var(--panel);
+  border-top:1px solid var(--border);
+  font-size:11px; color:var(--text-dim);
+  flex:none;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar { width:8px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:#2c3745; border-radius:4px; }
+::-webkit-scrollbar-thumb:hover { background:#3a485a; }

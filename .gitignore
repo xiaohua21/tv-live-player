@@ -1,0 +1,16 @@
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# ===== 运行时缓存 / 本地用户数据（非源码，不入库）=====
+data/source_cache.json
+data/prefs.json
+
+# ===== 编辑器 / 系统 =====
+.DS_Store
+Thumbs.db
+*.log
